@@ -1,0 +1,20 @@
+{
+  "name": "passport-angular-auth",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+    },
+  "dependencies": {
+      "express": "3.4.2",
+      "jade": "*",
+      "passport": "*",
+      "passport-local": "*",
+      "underscore": "*",
+      "validator": "~1.1.1",
+      "passport-twitter": "~0.1.4",
+      "passport-facebook": "~0.1.5",
+      "passport-google": "~0.3.0",
+      "passport-linkedin": "~0.1.3"
+    }
+  }
