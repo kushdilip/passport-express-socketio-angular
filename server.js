@@ -7,9 +7,8 @@ var express = require('express');
 var http = require('http');
 var passport = require('passport')
 var path = require('path');
+var User = require('./server/models/User.js');
 
-var routes = require('./routes');
-var user = require('./routes/user');
 
 var app = express();
 
@@ -31,11 +30,14 @@ app.use(express.cookieSession(
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 // // development only
 // if ('development' == app.get('env')) {
 //   app.use(express.errorHandler());
 // }
+
+passport.use(User.localStrategy);
+passport.use(User.googleStrategy());
+
 
 require('./server/routes.js')(app);
 
