@@ -13,6 +13,19 @@ angular.module('angular-client-side-auth', ['ngCookies'])
 			access: access.user
 		});
 
+	$routeProvider.when('/login', 
+		{
+			templateUrl: 'login', 
+			controller: 'LoginCtrl',
+			access: access.anon
+		});
+
+	$routeProvider.when('/404',
+        {
+            templateUrl: '404',
+            access: access.public
+        });
+	
 	$routeProvider.otherwise({redirectTo:'/404'});
 
 	$locationProvider.html5Mode(true);
