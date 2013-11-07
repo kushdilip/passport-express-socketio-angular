@@ -34,7 +34,7 @@ var routes = [
         })]
     },
 
-//    Local Auth
+    //    Local Auth
     {
         path: '/register',
         httpMethod: 'POST',
