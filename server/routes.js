@@ -1,11 +1,11 @@
 var _ = require('underscore')
     , path = require('path')
-    , passport = require('passport');
-    // , AuthCtrl = require('./controllers/auth')
-    // , UserCtrl = require('./controllers/user')
-    // , User = require('./models/User.js')
-    // , userRoles = require('../client/js/routingConfig').userRoles
-    // , accessLevels = require('../client/js/routingConfig').accessLevels;
+    , passport = require('passport')
+    , AuthCtrl = require('./controllers/auth')
+    , UserCtrl = require('./controllers/user')
+    , User = require('./models/User.js')
+    , userRoles = require('../client/js/routingConfig').userRoles
+    , accessLevels = require('../client/js/routingConfig').accessLevels;
 
 var routes = [
 
@@ -19,21 +19,63 @@ var routes = [
         }]
     },
 
-     // All other get requests should be handled by AngularJS's client-side routing system
+    // OAUTH
+    {
+        path: '/auth/google',
+        httpMethod: 'GET',
+        middleware: [passport.authenticate('google')]
+    },
+    {
+        path: '/auth/google/return',
+        httpMethod: 'GET',
+        middleware: [passport.authenticate('google', {
+            successRedirect: '/',
+            failureRedirect: '/login'
+        })]
+    },
+
+//    Local Auth
+    {
+        path: '/register',
+        httpMethod: 'POST',
+        middleware: [AuthCtrl.register]
+    },
+    {
+        path: '/login',
+        httpMethod: 'POST',
+        middleware: [AuthCtrl.login]
+    },
+    {
+        path: '/logout',
+        httpMethod: 'POST',
+        middleware: [AuthCtrl.logout]
+    },
+
+    //User resource
+    {
+        path:'/users',
+        httpMethod: 'GET',
+        middleware: [UserCtrl.index],
+        accessLevel: accessLevels.admin
+    },
+
+    // All other get requests should be handled by AngularJS's client-side routing system
     {
         path: '/*',
         httpMethod: 'GET',
         middleware: [function(req, res) {
-            // var role = userRoles.public, username = '';
-            // if(req.user) {
-            //     role = req.user.role;
-            //     username = req.user.username;
-            // }
-            // res.cookie('user', JSON.stringify({
-            //     'username': username,
-            //     'role': role
-            // }));
-            res.render('index');
+            var role = userRoles.public, username = '';
+            if(req.user) {
+                role = req.user.role;
+                username = req.user.username;
+            }
+            res.cookie('user', JSON.stringify({
+                'username': username,
+                'role': role
+            }));
+            console.log(req.url);
+            console.log(role);
+            res.render('index', {title: "Hello index"});
         }]
     }
 
@@ -43,7 +85,7 @@ var routes = [
 module.exports = function(app) {
 
 	_.each(routes, function (route) {
-		//route.middleware.unshift(ensureAuthorized);
+		route.middleware.unshift(ensureAuthorized);
 		var args = _.flatten([route.path, route.middleware]);
 
 		switch(route.httpMethod.toUpperCase()) {

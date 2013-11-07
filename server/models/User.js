@@ -92,7 +92,7 @@ module.exports = {
         check(user.role, 'Invalid user role given').isIn(stringArr);
     },
 
-     localStrategy: new LocalStrategy(
+    localStrategy: new LocalStrategy(
         function(username, password, done) {
 
             var user = module.exports.findByUsername(username);
@@ -110,7 +110,7 @@ module.exports = {
         }
     ),
 
-      googleStrategy: function() {
+    googleStrategy: function() {
 
         return new GoogleStrategy({
             returnURL: process.env.GOOGLE_RETURN_URL || "http://localhost:8000/auth/google/return",
