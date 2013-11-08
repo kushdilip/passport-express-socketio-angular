@@ -44,6 +44,9 @@ require('./server/routes.js')(app);
 // app.get('/', routes.index);
 // app.get('/users', user.list);
 
+passport.serializeUser(User.serializeUser);
+passport.deserializeUser(User.deserializeUser);
+
 app.set('port', process.env.PORT || 3000);
 
 http.createServer(app).listen(app.get('port'), function(){

@@ -72,7 +72,7 @@ module.exports = {
 		}));
 	},
 
-	 findByUsername: function(username) {
+	findByUsername: function(username) {
         return _.clone(_.find(users, function(user) { return user.username === username; }));
     },
 
@@ -113,8 +113,8 @@ module.exports = {
     googleStrategy: function() {
 
         return new GoogleStrategy({
-            returnURL: process.env.GOOGLE_RETURN_URL || "http://localhost:8000/auth/google/return",
-            realm: process.env.GOOGLE_REALM || "http://localhost:8000/"
+            returnURL: process.env.GOOGLE_RETURN_URL || "http://localhost:3000/auth/google/return",
+            realm: process.env.GOOGLE_REALM || "http://localhost:3000/"
         },
         function(identifier, profile, done) {
             var user = module.exports.findOrCreateOauthUser('google', identifier);

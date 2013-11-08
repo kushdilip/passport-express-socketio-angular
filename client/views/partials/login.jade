@@ -24,4 +24,19 @@
 			.controls
 				button.btn(type="submit", data-ng-disabled="loginForm.$invalid") Log in
 
+	hr
+	p ... or user one of them fancy social logins:
+	.btn-group
+		a.btn(href="", data-ng-click="loginOauth('facebook')")
+			i.icon-facebook-sign
+			|	Facebook
+		a.btn(href="", data-ng-click="loginOauth('twitter')")
+			i.icon-twitter
+			|	Twitter
+		a.btn(href="", data-ng-click="loginOauth('google')")
+			i.icon-google-plus-sign
+			|	Google
+		a.btn(href="", data-ng-click="loginOauth('linkedin')")
+			i.icon-linkedin
+			|	LinkedIn
 
