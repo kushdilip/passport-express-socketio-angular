@@ -55,7 +55,9 @@ passport.deserializeUser(User.deserializeUser);
 app.set('port', process.env.PORT || 3000);
 
 var server = http.createServer(app);
-var io = require('socket.io').listen(server);
+
+//socket.io logic moved to sockets.js file
+var io = require('./server/sockets.js').listen(server);
 
 
 server.listen(app.get('port'), function(){
@@ -63,6 +65,6 @@ server.listen(app.get('port'), function(){
 });
 
 
-io.sockets.on('connection', function (socket) {
-	socket.emit('welcome', 'welcome to Tech-Connect');
-})
+// io.sockets.on('connection', function (socket) {
+// 	socket.emit('welcome', 'welcome to Tech-Connect');
+// })
