@@ -1,7 +1,9 @@
-'user strict'
+'use strict'
 
-angular.module('angular-client-side-auth')
-.directive('accessLevel', ['Auth', function (Auth) {
+var dirctvApp = angular.module('angular-client-side-auth');
+
+//angular.module('angular-client-side-auth')
+dirctvApp.directive('accessLevel', ['Auth', function (Auth) {
 	return {
 		restrict: 'A',
 		link: function ($scope, element, attrs) {
@@ -22,19 +24,21 @@ angular.module('angular-client-side-auth')
 			});
 
 			function updateCSS () {
+				// console.log(userRole);
+				// console.log(accessLevel);
 				if (userRole && accessLevel) {
 					if (!Auth.authorize(accessLevel, userRole)) 
 						element.css('display', 'none');
 					else
-						element.css('dipslay', prevDisp);
+						element.css('display', prevDisp);
 				}
 			}
 		}
 	};
 }]);
-
-angular.module('angular-client-side-auth')
-.directive('activeNav', ['$location', function ($location) {
+ 
+//angular.module('angular-client-side-auth')
+dirctvApp.directive('activeNav', ['$location', function ($location) {
 	return {
 		restrict: 'A',
 		link: function (scope, element, attrs) {
@@ -43,10 +47,12 @@ angular.module('angular-client-side-auth')
 
 			scope.location = $location;
 			scope.$watch('location.absUrl()', function (newPath) {
-				if (path == newPath) 
+				if (path === newPath) {
 					element.addClass('active');
-				else
+				}
+				else{
 					element.removeClass('active');
+				}
 			});
 		}
 	};

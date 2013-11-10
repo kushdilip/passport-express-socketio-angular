@@ -56,7 +56,6 @@ module.exports = {
             user[provider] = providerId;
             users.push(user);
         }
-
         return user;
     },
 
@@ -123,7 +122,7 @@ module.exports = {
     },
 
     serializeUser: function (user, done) {
-    	done(dull, user.id);
+    	done(null, user.id);
     },
 
     deserializeUser: function (id, done) {
