@@ -3,7 +3,7 @@ var User
     , passport = require('passport')
     , LocalStrategy = require('passport-local').Strategy
     // , TwitterStrategy = require('passport-twitter').Strategy
-    // , FacebookStrategy = require('passport-facebook').Strategy
+    , FacebookStrategy = require('passport-facebook').Strategy
     , GoogleStrategy = require('passport-google').Strategy
     // , LinkedInStrategy = require('passport-linkedin').Strategy
     , check = require('validator').check
@@ -108,6 +108,24 @@ module.exports = {
 
         }
     ),
+
+    facebookStrategy: function () {
+        if(!process.env.FACEBOOK_APP_ID) throw new Error('A Facebook App ID is required if you want to enable login via Facebook.');
+        if(!process.env.FACEBOOK_APP_SECRET) throw new Error('A Facebook App Secret is required if you want to enable login via Facebook.');
+
+        return new FacebookStrategy({
+            clientID: process.env.FACEBOOK_APP_ID,
+            clientSecret: process.env.FACEBOOK_APP_SECRET,
+            callbackURL: process.env.FACEBOOK_CALLBACK_URL ||
+                "http://localhost:3000/auth/facebook/callback" 
+        },
+
+        function (accessToken, refreshToken, profile, done) {
+            var user = module.exports.findOrCreateOauthUser(profile.provider, profile.id);
+            done(null, user);
+        });
+
+    },
 
     googleStrategy: function() {
 

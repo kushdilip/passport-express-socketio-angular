@@ -30,6 +30,11 @@ app.use(express.cookieSession(
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+//Key Setting
+require('./server/keys.js')
+
+
 // // development only
 // if ('development' == app.get('env')) {
 //   app.use(express.errorHandler());
@@ -37,7 +42,7 @@ app.use(passport.session());
 
 passport.use(User.localStrategy);
 passport.use(User.googleStrategy());
-
+passport.use(User.facebookStrategy());
 
 require('./server/routes.js')(app);
 
@@ -49,6 +54,15 @@ passport.deserializeUser(User.deserializeUser);
 
 app.set('port', process.env.PORT || 3000);
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
+
+
+server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+
+io.sockets.on('connection', function (socket) {
+	socket.emit('welcome', 'welcome to Tech-Connect');
+})

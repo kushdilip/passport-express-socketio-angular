@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('angular-client-side-auth')
-.factory('Auth', ['$http', '$cookieStore', function ($http, $cookieStore) {
+var serviceApp = angular.module('angular-client-side-auth')
+serviceApp.factory('Auth', ['$http', '$cookieStore', function ($http, $cookieStore) {
 	
 	var accessLevels = routingConfig.accessLevels
 		, userRoles = routingConfig.userRoles
@@ -60,8 +60,8 @@ angular.module('angular-client-side-auth')
 	};
 }]);
 
-angular.module('angular-client-side-auth')
-.factory('Users', ['$http', function ($http) {
+//angular.module('angular-client-side-auth')
+serviceApp.factory('Users', ['$http', function ($http) {
 
 	return {
 		getAll: function (success, error) {
@@ -69,3 +69,31 @@ angular.module('angular-client-side-auth')
 		}
 	};
 }]);
+
+
+serviceApp.factory('socket', function($rootScope) {
+    var socket = io.connect();
+    return {
+        on: function(eventName, callback) {
+            socket.on(eventName, function() {
+                var args = arguments;
+                $rootScope.$apply(function() {
+                    callback.apply(socket, args);
+                });
+            });
+        },
+        emit: function(eventName, data, callback) {
+            socket.emit(eventName, data, function() {
+                var args = arguments;
+                $rootScope.$apply(function() {
+                    if(callback) {
+                        callback.apply(socket, args);
+                    }
+                });
+            });
+        }
+    };
+});
+
+
+

@@ -21,6 +21,21 @@ var routes = [
 
     // OAUTH
     {
+        path: '/auth/facebook',
+        httpMethod: 'GET',
+        middleware: [passport.authenticate('facebook')]
+    },
+
+    {
+        path: '/auth/facebook/callback',
+        httpMethod: 'GET',
+        middleware: [passport.authenticate('facebook',{
+            successRedirect: '/',
+            failureRedirect: '/login'
+        })]
+    },
+
+    {
         path: '/auth/google',
         httpMethod: 'GET',
         middleware: [passport.authenticate('google')]

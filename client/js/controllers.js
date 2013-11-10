@@ -22,8 +22,10 @@ ctrlApp
 
 
 //angular.module('angular-client-side-auth')
-ctrlApp.controller('HomeCtrl', ['$rootScope', '$scope', function($rootScope, $scope) {
-	console.log($scope.user);
+ctrlApp.controller('HomeCtrl', ['$rootScope', '$scope', 'socket', function($rootScope, $scope, socket) {
+	socket.on('welcome', function (data) {
+		console.log(data);
+	});
 }]);
 
 ctrlApp
