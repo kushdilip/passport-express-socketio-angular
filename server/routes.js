@@ -74,6 +74,14 @@ var routes = [
         accessLevel: accessLevels.admin
     },
 
+    //quiz resource
+    {
+        path: '/random_question',
+        httpMethod: 'GET',
+        middleware: [UserCtrl.random_question],
+        accessLevel: accessLevels.user
+    },
+
     // All other get requests should be handled by AngularJS's client-side routing system
     {
         path: '/*',

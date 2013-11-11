@@ -8,8 +8,8 @@ dirctvApp.directive('accessLevel', ['Auth', function (Auth) {
 		restrict: 'A',
 		link: function ($scope, element, attrs) {
 			var prevDisp = element.css('display')
-				,userRole
-				,accessLevel;
+			,userRole
+			,accessLevel;
 
 			$scope.user = Auth.user;
 			$scope.$watch('user', function (user) {
@@ -36,7 +36,7 @@ dirctvApp.directive('accessLevel', ['Auth', function (Auth) {
 		}
 	};
 }]);
- 
+
 //angular.module('angular-client-side-auth')
 dirctvApp.directive('activeNav', ['$location', function ($location) {
 	return {
@@ -57,3 +57,23 @@ dirctvApp.directive('activeNav', ['$location', function ($location) {
 		}
 	};
 }]);
+
+dirctvApp
+.directive('activeQuiz', ['Quiz','socket', function (Quiz, socket) {
+	return {
+		restrict: 'A',
+		link: function ($scope, element, attrs) {
+			element.css('display', 'none');
+			socket.on('startQuiz', function (data) {
+				console.log('Starting the quiz');
+				element.css('display', 'inline');
+				
+				Quiz.getNextQuestion(function (res) {
+					console.log('received question');
+				}, function (err) {
+					$rootScope.error = "Failed to fetch users.";
+				});
+			});
+		}
+	};
+}])

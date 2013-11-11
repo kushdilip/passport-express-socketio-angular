@@ -11,5 +11,11 @@ module.exports = {
             delete user.google;
 		});
 		res.json(users);
+	},
+
+	random_question: function (req, res) {
+		res.json({message: 'Hello question'});
 	}
+
+
 }

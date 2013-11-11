@@ -70,6 +70,14 @@ serviceApp.factory('Users', ['$http', function ($http) {
 	};
 }]);
 
+serviceApp
+.factory('Quiz', ['$http', function ($http) {
+	return {
+		getNextQuestion: function (index) {
+			$http.get('/random_question').success(success).error(error);
+		}
+	};
+}])
 
 serviceApp.factory('socket', function($rootScope) {
     var socket = io.connect();
