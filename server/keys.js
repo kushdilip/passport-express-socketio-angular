@@ -1,2 +1,2 @@
-process.env['FACEBOOK_APP_ID'] = '383650115101513';
-process.env['FACEBOOK_APP_SECRET'] = '7ea34fedf0e636e4e288dbce36132523';
+process.env['FACEBOOK_APP_ID'] = '';
+process.env['FACEBOOK_APP_SECRET'] = '';
